@@ -1,0 +1,72 @@
+﻿@page
+@model EST_Work_Dashboard.Pages.DailyRawDataPage.IndexModel
+@{
+    ViewData["Title"] = "Daily Raw Data";
+}
+
+<h2>Daily Raw Data 목록</h2>
+
+<a asp-page="Edit" class="btn btn-success mb-3"><i class="bi bi-pencil"></i> 새 항목 등록</a>
+
+<!-- 스크롤 가능한 래퍼 div -->
+<div style="overflow-x: auto; display: block;">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th class="width-50">ww</th>
+                <th class="width-50">Start Date</th>
+                <th class="width-50">End Date</th>
+                <th class="width-80">CP</th>
+                <th class="width-80">담당자</th>
+                <th class="width-150">분류</th>
+                <th class="width-50">Site</th>
+                <th class="width-80">Plant</th>
+                <th class="width-80">Line</th>
+                <th class="width-150">공정</th>
+                <th class="width-150">장비사</th>
+                <th class="width-150">모델명</th>
+                <th class="width-150">장비번호</th>
+                <th class="width-300">알람/문제내용</th>
+                <th class="width-300">조치사항</th>
+                <th class="width-300">Status</th>
+                <th class="width-80">Done Q'ty</th>
+                <th class="width-300">Remark</th>
+                <th class="width-80">Q'ty</th>
+                <th class="width-120">Outsourced Cost ($K)/Set</th>
+                <th class="width-120">In-house Cost ($K)/Set</th>
+                <th class="width-120">Cost Save ($K)/Set</th>
+                <th class="width-120">TTL Cost Save ($K)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.RawDataList)
+            {
+                <tr>
+                    <td>@item.ww</td>
+                    <td>@(item.StartDate?.ToString("yyyy-MM-dd") ?? "")</td>
+                    <td>@(item.EndDate?.ToString("yyyy-MM-dd") ?? "")</td>
+                    <td>@item.CP</td>
+                    <td>@item.Manager</td>
+                    <td>@item.Classification</td>
+                    <td>@item.Site</td>
+                    <td>@item.Plant</td>
+                    <td>@item.Line</td>
+                    <td>@item.Process</td>
+                    <td>@item.Eq_Manufacturer</td>
+                    <td>@item.Model_Name</td>
+                    <td>@item.MC</td>
+                    <td>@item.Problem_Description</td>
+                    <td>@item.Actions</td>
+                    <td>@item.Status</td>
+                    <td>@item.Done_Qty</td>
+                    <td>@item.Remark</td>
+                    <td>@item.Qty</td>
+                    <td>@item.Outsourced_Cost</td>
+                    <td>@item.Inhouse_Cost</td>
+                    <td>@item.Cost_Save</td>
+                    <td>@item.TTL_Cost_Save</td>                               
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

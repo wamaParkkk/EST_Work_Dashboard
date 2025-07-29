@@ -1,0 +1,168 @@
+﻿@page
+@model EST_Work_Dashboard.Pages.DailyRawDataPage.EditModel
+@{
+    ViewData["Title"] = "Daily Raw Data 작성";
+}
+
+<h2>작성 (Daily Raw Data)</h2>
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <label>ww</label>
+            <input asp-for="Input.ww" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Start Date</label>
+            <input asp-for="Input.StartDate" class="form-control" type="date" />
+        </div>
+
+        <div class="col-md-4">
+            <label>End Date</label>            
+            <input asp-for="Input.EndDate" class="form-control" type="date" />
+        </div>
+
+        <div class="form-group">
+            <label>CP</label>
+            <select asp-for="Input.CP" class="form-control">
+                <option>강대훈 수석</option>
+                <option>김민규 수석</option>
+                <option>김범준 수석</option>
+                <option>김성훈 수석</option>
+                <option>김완 수석</option>
+                <option>김태경 수석</option>
+                <option>박형길 수석</option>
+                <option>배철호 수석</option>
+                <option>송성국 수석</option>
+                <option>이건구 수석</option>
+                <option>이삼섭 수석</option>
+                <option>장명진 수석</option>
+                <option>최용규 수석</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>담당자</label>
+            <input asp-for="Input.Manager" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>분류</label>
+            <select asp-for="Input.Classification" class="form-control">
+                <option>Activity</option>
+                <option>Automation</option>
+                <option>Cost reduction</option>
+                <option>Productivity</option>
+                <option>Quality Improvement</option>
+                <option>Quality risk removal</option>                
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label>Site</label>
+            <select asp-for="Input.Site" class="form-control">                
+                <option>ATK</option>
+                <option>ATV</option>
+                <option>AWW</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label>Plant</label>
+            <select asp-for="Input.Plant" class="form-control">
+                <option>K5</option>
+                <option>K4</option>
+                <option>K3</option>
+                <option>ATV</option>
+                <option>AWW</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label>Line</label>
+            <select asp-for="Input.Line" class="form-control">
+                <option>Bump</option>
+                <option>DPS</option>
+                <option>ESTeam</option>
+                <option>FCBGA</option>
+                <option>SMD</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>공정</label>
+            <input asp-for="Input.Process" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>장비사</label>
+            <input asp-for="Input.Eq_Manufacturer" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>모델명</label>
+            <input asp-for="Input.Model_Name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>장비번호</label>
+            <input asp-for="Input.MC" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>알람/문제내용</label>
+            <textarea asp-for="Input.Problem_Description" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>조치사항</label>
+            <textarea asp-for="Input.Actions" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <textarea asp-for="Input.Status" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Done Q'ty</label>
+            <input asp-for="Input.Done_Qty" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Remark</label>
+            <textarea asp-for="Input.Remark" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Q'ty</label>
+            <input asp-for="Input.Qty" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Outsourced Cost ($K)/Set</label>
+            <input asp-for="Input.Outsourced_Cost" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>In-house Cost ($K)/Set</label>
+            <input asp-for="Input.Inhouse_Cost" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Cost Save ($K)/Set</label>
+            <input asp-for="Input.Cost_Save" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>TTL Cost Save ($K)</label>
+            <input asp-for="Input.TTL_Cost_Save" class="form-control" />
+        </div>        
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-cloud-upload"></i> 등록</button>
+            <a asp-page="Index" class="btn btn-secondary"><i class="bi bi-x"></i> 취소</a>
+        </div>
+    </div>    
+</form>
