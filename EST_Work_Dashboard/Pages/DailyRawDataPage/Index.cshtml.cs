@@ -1,5 +1,6 @@
 using EST_Work_Dashboard.Data;
 using EST_Work_Dashboard.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EST_Work_Dashboard.Pages.DailyRawDataPage
@@ -21,6 +22,14 @@ namespace EST_Work_Dashboard.Pages.DailyRawDataPage
         public async Task OnGetAsync()
         {
             RawDataList = await _dataService.GetAllAsync();
+        }
+
+        // 삭제 핸들러 추가
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            await _dataService.DeleteAsync(id);
+
+            return RedirectToPage();
         }
     }
 }

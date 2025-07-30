@@ -4,6 +4,7 @@
     {
         // ?는 입력값이 없어도 서버에서 거르지 않고 저장
         // Edit.cshtml.cs의 OnPostAsync()함수에서 ModelState.IsValid = false여도 서버에 저장됨
+        public int Id { get; set; }
         public string? ww { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }

@@ -36,12 +36,13 @@
                 <th class="width-120">In-house Cost ($K)/Set</th>
                 <th class="width-120">Cost Save ($K)/Set</th>
                 <th class="width-120">TTL Cost Save ($K)</th>
+                <th style="min-width: 155px; text-align: center;">작업</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.RawDataList)
             {
-                <tr>
+                <tr>                    
                     <td>@item.ww</td>
                     <td>@(item.StartDate?.ToString("yyyy-MM-dd") ?? "")</td>
                     <td>@(item.EndDate?.ToString("yyyy-MM-dd") ?? "")</td>
@@ -64,7 +65,15 @@
                     <td>@item.Outsourced_Cost</td>
                     <td>@item.Inhouse_Cost</td>
                     <td>@item.Cost_Save</td>
-                    <td>@item.TTL_Cost_Save</td>                               
+                    <td>@item.TTL_Cost_Save</td>                    
+
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="bi bi-magic"></i> 수정</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;"
+                              onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> 삭제</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
