@@ -2,6 +2,7 @@ using EST_Work_Dashboard.Data;
 using EST_Work_Dashboard.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Globalization;
 
 namespace EST_Work_Dashboard.Pages.DailyRawDataPage
 {
@@ -22,6 +23,20 @@ namespace EST_Work_Dashboard.Pages.DailyRawDataPage
         {         
             if (!ModelState.IsValid)
                 return Page();
+
+            // tkww 자동 계산
+            if (Input.StartDate.HasValue)
+            {
+                var startDate = Input.StartDate.Value;
+                CultureInfo ci = CultureInfo.InvariantCulture;
+                Calendar cal = ci.Calendar;
+                int weekNum = cal.GetWeekOfYear(startDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+                Input.ww = $"ww{weekNum:D2}";
+            }
+            else
+            {
+                Input.ww = "";
+            }
 
             if (Input.Id > 0)
             {
