@@ -6,16 +6,21 @@
 
 <h2>Daily Raw Data 목록</h2>
 
-<a asp-page="Edit" class="btn btn-success mb-3"><i class="bi bi-pencil"></i> 새 항목 등록</a>
+<div class="d-flex gap-2 mb-3">
+    <a class="btn btn-primary" asp-page="Edit">
+        <i class="bi bi-plus-circle"></i> 새 항목 등록
+    </a>
 
-<!-- 스크롤 가능한 래퍼 div -->
-<div style="overflow-x: auto; display: block;">
     <form method="post" asp-page-handler="DownloadExcel">
-        <button type="submit" class="btn btn-success mb-3">
-            <i class="bi bi-file-earmark-excel"></i> 엑셀 다운로드
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-file-earmark-excel"></i> 다운로드
         </button>
     </form>
+</div>
 
+<!-- 스크롤 가능한 래퍼 div -->
+<!--<div style="overflow-x: auto; display: block;">-->
+<div style="display: block;">    
     <form method="get" class="mb-3">
         <div class="row align-items-end g-2">
             <div class="col-auto">
@@ -68,13 +73,13 @@
                 <input type="text" name="mc" class="form-control input-xs" value="@Request.Query["mc"]" />
             </div>
             
-            <div class="col-md-1">
+            <div class="col-auto">
                 <button type="submit" class="btn btn-primary w-30"><i class="bi bi-search"></i> 검색</button>
             </div>
         </div>
     </form>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped table-hover">
         <thead class="table-dark">
             <tr>
                 <th style="min-width: 150px; text-align: center;">작업</th>
