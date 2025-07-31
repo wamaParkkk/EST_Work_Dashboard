@@ -1,0 +1,106 @@
+﻿@page
+@model EST_Work_Dashboard.Pages.EqSupportOverview.EditModel
+@{
+    ViewData["Title"] = "주말 지원/제한적 가동/장기 Down 작성";
+}
+<h2>작성 (주말 지원/제한적 가동/장기 Down)</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Input.Id" />
+
+    <div class="row">
+        <div class="form-group">
+            <label>분류</label>
+            <select asp-for="Input.Classification" class="form-control">
+                <option>주말 지원</option>
+                <option>제한적 가동</option>
+                <option>장기 Down</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>CP</label>
+            <select asp-for="Input.CP" class="form-control">
+                <option>강대훈 수석</option>
+                <option>김민규 수석</option>
+                <option>김범준 수석</option>
+                <option>김성훈 수석</option>
+                <option>김완 수석</option>
+                <option>김태경 수석</option>
+                <option>박형길 수석</option>
+                <option>배철호 수석</option>
+                <option>송성국 수석</option>
+                <option>이건구 수석</option>
+                <option>이삼섭 수석</option>
+                <option>장명진 수석</option>
+                <option>최용규 수석</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>담당자</label>
+            <input asp-for="Input.Manager" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label>공정</label>
+            <select asp-for="Input.Process" class="form-control">
+                <option>CA</option>
+                <option>LAB</option>
+                <option>Mold Saw</option>
+                <option>RLTC</option>
+                <option>TCB</option>                
+            </select>
+        </div>
+        
+        <div class="col-md-4">
+            <label>장비</label>
+            <input asp-for="Input.Equipment" class="form-control" />
+        </div>
+        
+        <div class="col-md-4">
+            <label>장비 번호</label>
+            <input asp-for="Input.EquipmentNo" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Down 사유</label>
+            <textarea asp-for="Input.Down_Reason" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>조치 내용</label>
+            <textarea asp-for="Input.Actions" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>현황</label>
+            <textarea asp-for="Input.Status" class="form-control"></textarea>
+        </div>
+
+        <div class="col-md-4">
+            <label>Down 날짜</label>
+            <input asp-for="Input.Down_Date" class="form-control" type="date" />
+        </div>
+
+        <div class="col-md-4">
+            <label>복구 날짜</label>
+            <input asp-for="Input.Recovery_Date" class="form-control" type="date" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Down 시간(Hr)</label>
+            <input asp-for="Input.Down_Time" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>조치 인원</label>
+            <textarea asp-for="Input.Technician" class="form-control"></textarea>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-cloud-upload"></i> 등록</button>
+            <a asp-page="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> 취소</a>
+        </div>
+    </div>    
+</form>

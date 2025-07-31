@@ -2,12 +2,13 @@ using EST_Work_Dashboard.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<DailyRawDataService>();
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-// 고정 포트 5010으로 Listen (외부 접속 가능)
+builder.Services.AddSingleton<DailyRawDataService>();
+builder.Services.AddSingleton<EqSupportOverviewService>();
+
+// 고정 포트 5020으로 Listen (외부 접속 가능)
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5020);

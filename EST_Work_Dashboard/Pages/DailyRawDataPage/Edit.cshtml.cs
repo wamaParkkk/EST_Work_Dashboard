@@ -17,7 +17,26 @@ namespace EST_Work_Dashboard.Pages.DailyRawDataPage
         
         [BindProperty]
         public DailyRawData Input { get; set; } // 사용자가 입력한 값 저장용               
-        
+
+        // 항목 수정 시 데이터 로드
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id.HasValue)
+            {
+                Input = await _dataService.GetByIdAsync(id.Value);
+                if (Input == null)
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                Input = new DailyRawData(); // 새로 작성 시
+            }
+
+            return Page();
+        }
+
         // 새 항목 작성 및 수정
         public async Task<IActionResult> OnPostAsync()
         {         
@@ -50,25 +69,6 @@ namespace EST_Work_Dashboard.Pages.DailyRawDataPage
             }            
 
             return RedirectToPage("Index"); // 저장이 완료되면 Index로 이동. GetAllAsync()를 호출해 목록 테이블에 즉시 반영
-        }
-
-        // 항목 수정 시 데이터 로드
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id.HasValue)
-            {
-                Input = await _dataService.GetByIdAsync(id.Value);
-                if (Input == null)
-                {
-                    return NotFound();
-                }
-            }
-            else
-            {
-                Input = new DailyRawData(); // 새로 작성 시
-            }
-
-            return Page();
-        }
+        }        
     }
 }

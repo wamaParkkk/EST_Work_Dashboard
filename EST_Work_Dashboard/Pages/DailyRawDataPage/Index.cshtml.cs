@@ -27,13 +27,13 @@ namespace EST_Work_Dashboard.Pages.DailyRawDataPage
                 (string.IsNullOrEmpty(ww) || x.ww == ww) &&
                 (!start.HasValue || x.StartDate >= start.Value) &&
                 (!end.HasValue || x.EndDate <= end.Value) &&
-                (string.IsNullOrEmpty(cp) || x.CP.Contains(cp)) &&
-                (string.IsNullOrEmpty(manager) || x.Manager.Contains(manager)) &&
-                (string.IsNullOrEmpty(classification) || x.Classification.Contains(classification)) &&
-                (string.IsNullOrEmpty(line) || x.Line.Contains(line)) &&
-                (string.IsNullOrEmpty(process) || x.Process.Contains(process)) &&
-                (string.IsNullOrEmpty(model) || x.Model_Name.Contains(model)) &&
-                (string.IsNullOrEmpty(mc) || x.MC.Contains(mc))
+                (string.IsNullOrEmpty(cp) || (x.CP ?? "").Contains(cp)) &&
+                (string.IsNullOrEmpty(manager) || (x.Manager ?? "").Contains(manager)) &&
+                (string.IsNullOrEmpty(classification) || (x.Classification ?? "").Contains(classification)) &&
+                (string.IsNullOrEmpty(line) || (x.Line ?? "").Contains(line)) &&
+                (string.IsNullOrEmpty(process) || (x.Process ?? "").Contains(process)) &&
+                (string.IsNullOrEmpty(model) || (x.Model_Name ?? "").Contains(model)) &&
+                (string.IsNullOrEmpty(mc) || (x.MC ?? "").Contains(mc))
             ).ToList();
         }
 

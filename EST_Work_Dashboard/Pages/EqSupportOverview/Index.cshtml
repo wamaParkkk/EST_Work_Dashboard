@@ -1,0 +1,117 @@
+﻿@page
+@model EST_Work_Dashboard.Pages.EqSupportOverview.IndexModel
+@{
+    ViewData["Title"] = "Equipment Support Overview";
+}
+<h2>주말 지원/제한적 가동/장기 Down 목록</h2>
+
+<div class="d-flex gap-2 mb-3">
+    <a class="btn btn-primary" asp-page="Edit">
+        <i class="bi bi-plus-circle"></i> 새 항목 등록
+    </a>
+
+    <form method="post" asp-page-handler="DownloadExcel">
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-cloud-download"></i> 다운로드
+        </button>
+    </form>
+</div>
+
+<div style="display: block;">
+    <form method="get" class="mb-3">
+        <div class="row align-items-end g-2">
+            <div class="col-auto">
+                <label class="form-label">분류</label>
+                <input type="text" name="classification" class="form-control input-xs" value="@Request.Query["classification"]" />                
+            </div>
+            
+            <div class="col-auto">
+                <label class="form-label">CP</label>
+                <input type="text" name="cp" class="form-control input-xs" value="@Request.Query["cp"]" />
+            </div>
+            
+            <div class="col-auto">
+                <label class="form-label">담당자</label>
+                <input type="text" name="manager" class="form-control input-xs" value="@Request.Query["manager"]" />
+            </div>
+            
+            <div class="col-auto">
+                <label class="form-label">공정</label>
+                <input type="text" name="process" class="form-control input-xs" value="@Request.Query["process"]" />
+            </div>
+            
+            <div class="col-auto">
+                <label class="form-label">장비</label>
+                <input type="text" name="equipment" class="form-control input-xs" value="@Request.Query["equipment"]" />
+            </div>
+            
+            <div class="col-auto">
+                <label class="form-label">장비 번호</label>
+                <input type="text" name="equipmentNo" class="form-control input-xs" value="@Request.Query["equipmentNo"]" />
+            </div>
+            
+            <div class="col-auto">
+                <label class="form-label">Down 날짜</label>
+                <input type="date" name="down" class="form-control input-xs" value="@Request.Query["down"]" />
+            </div>
+            
+            <div class="col-auto">
+                <label class="form-label">복구 날짜</label>
+                <input type="date" name="recovery" class="form-control input-xs" value="@Request.Query["recovery"]" />
+            </div>
+            
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary w-30"><i class="bi bi-search"></i> 검색</button>
+            </div>
+        </div>
+    </form>
+    
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th style="min-width: 150px; text-align: center;">작업</th>
+                <th class="width-150">분류</th>
+                <th class="width-80">CP</th>
+                <th class="width-80">담당자</th>
+                <th class="width-150">공정</th>
+                <th class="width-150">장비</th>
+                <th class="width-150">장비 번호</th>
+                <th class="width-300">Down 사유</th>
+                <th class="width-300">조치 내용</th>
+                <th class="width-300">현황</th>
+                <th class="width-50">Down 날짜</th>
+                <th class="width-50">복구 날짜</th>
+                <th class="width-150">Down 시간(Hr)</th>                
+                <th class="width-300">조치 인원</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OverviewList)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="bi bi-magic"></i> 수정</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;"
+                              onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> 삭제</button>
+                        </form>
+                    </td>
+
+                    <td>@item.Classification</td>
+                    <td>@item.CP</td>
+                    <td>@item.Manager</td>
+                    <td>@item.Process</td>
+                    <td>@item.Equipment</td>
+                    <td>@item.EquipmentNo</td>
+                    <td>@item.Down_Reason</td>
+                    <td>@item.Actions</td>
+                    <td>@item.Status</td>
+                    <td>@(item.Down_Date?.ToString("yyyy-MM-dd") ?? "")</td>
+                    <td>@(item.Recovery_Date?.ToString("yyyy-MM-dd") ?? "")</td>
+                    <td>@item.Down_Time</td>
+                    <td>@item.Technician</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

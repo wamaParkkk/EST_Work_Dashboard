@@ -75,9 +75,10 @@ namespace EST_Work_Dashboard.Data
                                  (ww, StartDate, EndDate, CP, Manager, Classification, Site, Plant, Line, Process, 
                                   Eq_Manufacturer, Model_Name, MC, Problem_Description, Actions, Cause, Status,
                                   TTL_Qty, Done_Qty, Remark, Qty, Outsourced_Cost, Inhouse_Cost, Cost_Save, TTL_Cost_Save)
-                                 VALUES (@ww, @StartDate, @EndDate, @CP, @Manager, @Classification, @Site, @Plant, @Line, @Process,
-                                         @Eq_Manufacturer, @Model_Name, @MC, @Problem_Description, @Actions, @Cause, @Status,
-                                         @TTL_Qty, @Done_Qty, @Remark, @Qty, @Outsourced_Cost, @Inhouse_Cost, @Cost_Save, @TTL_Cost_Save)";
+                                 VALUES 
+                                  (@ww, @StartDate, @EndDate, @CP, @Manager, @Classification, @Site, @Plant, @Line, @Process,
+                                   @Eq_Manufacturer, @Model_Name, @MC, @Problem_Description, @Actions, @Cause, @Status,
+                                   @TTL_Qty, @Done_Qty, @Remark, @Qty, @Outsourced_Cost, @Inhouse_Cost, @Cost_Save, @TTL_Cost_Save)";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -166,31 +167,13 @@ namespace EST_Work_Dashboard.Data
                 await conn.OpenAsync();
 
                 string query = @"UPDATE EST_DailyRawData SET
-                                        ww = @ww,
-                                        StartDate = @StartDate,
-                                        EndDate = @EndDate,
-                                        CP = @CP,
-                                        Manager = @Manager,
-                                        Classification = @Classification,
-                                        Site = @Site,
-                                        Plant = @Plant,
-                                        Line = @Line,
-                                        Process = @Process,
-                                        Eq_Manufacturer = @Eq_Manufacturer,
-                                        Model_Name = @Model_Name,
-                                        MC = @MC,
-                                        Problem_Description = @Problem_Description,
-                                        Actions = @Actions,
-                                        Cause = @Cause,
-                                        Status = @Status,
-                                        TTL_Qty = @TTL_Qty,
-                                        Done_Qty = @Done_Qty,
-                                        Remark = @Remark,
-                                        Qty = @Qty,
-                                        Outsourced_Cost = @Outsourced_Cost,
-                                        Inhouse_Cost = @Inhouse_Cost,
-                                        Cost_Save = @Cost_Save,
-                                        TTL_Cost_Save = @TTL_Cost_Save
+                                        ww = @ww, StartDate = @StartDate, EndDate = @EndDate,
+                                        CP = @CP, Manager = @Manager, Classification = @Classification,
+                                        Site = @Site, Plant = @Plant, Line = @Line, Process = @Process,
+                                        Eq_Manufacturer = @Eq_Manufacturer, Model_Name = @Model_Name, MC = @MC,
+                                        Problem_Description = @Problem_Description, Actions = @Actions, Cause = @Cause, Status = @Status,
+                                        TTL_Qty = @TTL_Qty, Done_Qty = @Done_Qty, Remark = @Remark, Qty = @Qty,
+                                        Outsourced_Cost = @Outsourced_Cost, Inhouse_Cost = @Inhouse_Cost, Cost_Save = @Cost_Save, TTL_Cost_Save = @TTL_Cost_Save
                                  WHERE Id = @Id";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))

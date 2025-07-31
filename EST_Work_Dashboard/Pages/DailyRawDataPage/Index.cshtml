@@ -13,13 +13,12 @@
 
     <form method="post" asp-page-handler="DownloadExcel">
         <button type="submit" class="btn btn-success">
-            <i class="bi bi-file-earmark-excel"></i> 다운로드
+            <i class="bi bi-cloud-download"></i> 다운로드
         </button>
     </form>
 </div>
 
 <!-- 스크롤 가능한 래퍼 div -->
-<!--<div style="overflow-x: auto; display: block;">-->
 <div style="display: block;">    
     <form method="get" class="mb-3">
         <div class="row align-items-end g-2">
@@ -69,7 +68,7 @@
             </div>
             
             <div class="col-auto">
-                <label class="form-label">장비번호</label>
+                <label class="form-label">장비 번호</label>
                 <input type="text" name="mc" class="form-control input-xs" value="@Request.Query["mc"]" />
             </div>
             
@@ -95,10 +94,10 @@
                 <th class="width-150">공정</th>
                 <th class="width-150">장비사</th>
                 <th class="width-150">모델명</th>
-                <th class="width-150">장비번호</th>
+                <th class="width-150">장비 번호</th>
                 <th class="width-300">알람/문제내용</th>
-                <th class="width-300">조치사항</th>
-                <th class="width-300">문제원인</th>
+                <th class="width-300">조치 사항</th>
+                <th class="width-300">문제 원인</th>
                 <th class="width-300">Status</th>
                 <th class="width-80">TTL Q'ty</th>
                 <th class="width-80">Done Q'ty</th>
