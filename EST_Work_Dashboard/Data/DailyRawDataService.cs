@@ -33,8 +33,8 @@ namespace EST_Work_Dashboard.Data
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             ww = reader["ww"].ToString(),
-                            StartDate = reader.GetDateTime(reader.GetOrdinal("StartDate")),
-                            EndDate = reader.GetDateTime(reader.GetOrdinal("EndDate")),
+                            StartDate = reader.GetDateTime(reader.GetOrdinal("StartDate")),                            
+                            EndDate = reader.IsDBNull(reader.GetOrdinal("EndDate")) ? null : reader.GetDateTime(reader.GetOrdinal("EndDate")),
                             CP = reader["CP"].ToString(),
                             Manager = reader["Manager"].ToString(),
                             Classification = reader["Classification"].ToString(),
@@ -85,7 +85,7 @@ namespace EST_Work_Dashboard.Data
                     // string 값이 null일 경우 빈 문자열로 대체
                     cmd.Parameters.AddWithValue("@ww", item.ww ?? "");
                     cmd.Parameters.AddWithValue("@StartDate", item.StartDate);
-                    cmd.Parameters.AddWithValue("@EndDate", item.EndDate);
+                    cmd.Parameters.AddWithValue("@EndDate", (object?)item.EndDate ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@CP", item.CP ?? "");
                     cmd.Parameters.AddWithValue("@Manager", item.Manager ?? "");
                     cmd.Parameters.AddWithValue("@Classification", item.Classification ?? "");
@@ -181,7 +181,7 @@ namespace EST_Work_Dashboard.Data
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     cmd.Parameters.AddWithValue("@ww", item.ww ?? "");
                     cmd.Parameters.AddWithValue("@StartDate", item.StartDate);
-                    cmd.Parameters.AddWithValue("@EndDate", item.EndDate);
+                    cmd.Parameters.AddWithValue("@EndDate", (object?)item.EndDate ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@CP", item.CP ?? "");
                     cmd.Parameters.AddWithValue("@Manager", item.Manager ?? "");
                     cmd.Parameters.AddWithValue("@Classification", item.Classification ?? "");

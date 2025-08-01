@@ -40,7 +40,7 @@ namespace EST_Work_Dashboard.Data
                             Actions = reader["Actions"].ToString(),
                             Status = reader["Status"].ToString(),
                             Down_Date = reader.GetDateTime(reader.GetOrdinal("Down_Date")),
-                            Recovery_Date = reader.GetDateTime(reader.GetOrdinal("Recovery_Date")),
+                            Recovery_Date = reader.IsDBNull(reader.GetOrdinal("Recovery_Date")) ? null : reader.GetDateTime(reader.GetOrdinal("Recovery_Date")),
                             Down_Time = reader["Down_Time"].ToString(),
                             Technician = reader["Technician"].ToString()
                         });
@@ -73,7 +73,7 @@ namespace EST_Work_Dashboard.Data
                     cmd.Parameters.AddWithValue("@Actions", item.Actions ?? "");
                     cmd.Parameters.AddWithValue("@Status", item.Status ?? "");
                     cmd.Parameters.AddWithValue("@Down_Date", item.Down_Date);
-                    cmd.Parameters.AddWithValue("@Recovery_Date", item.Recovery_Date);
+                    cmd.Parameters.AddWithValue("@Recovery_Date", (object?)item.Recovery_Date ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Down_Time", item.Down_Time ?? "");
                     cmd.Parameters.AddWithValue("@Technician", item.Technician ?? "");
 
@@ -145,7 +145,7 @@ namespace EST_Work_Dashboard.Data
                     cmd.Parameters.AddWithValue("@Actions", item.Actions ?? "");                    
                     cmd.Parameters.AddWithValue("@Status", item.Status ?? "");
                     cmd.Parameters.AddWithValue("@Down_Date", item.Down_Date);
-                    cmd.Parameters.AddWithValue("@Recovery_Date", item.Recovery_Date);
+                    cmd.Parameters.AddWithValue("@Recovery_Date", (object?)item.Recovery_Date ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Down_Time", item.Down_Time ?? "");
                     cmd.Parameters.AddWithValue("@Technician", item.Technician ?? "");                    
 

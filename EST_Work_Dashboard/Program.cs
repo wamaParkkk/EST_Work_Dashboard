@@ -7,6 +7,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<DailyRawDataService>();
 builder.Services.AddSingleton<EqSupportOverviewService>();
+builder.Services.AddSingleton<LayOutService>();
+builder.Services.AddSingleton<TrainingService>();
 
 // 고정 포트 5020으로 Listen (외부 접속 가능)
 builder.WebHost.ConfigureKestrel(options =>

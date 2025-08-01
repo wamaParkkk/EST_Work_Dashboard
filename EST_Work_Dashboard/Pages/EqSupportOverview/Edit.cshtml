@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "주말 지원/제한적 가동/장기 Down 작성";
 }
-<h2>작성 (주말 지원/제한적 가동/장기 Down)</h2>
+<h2 style="font-size: 1.5rem; margin-bottom: 30px;">작성 (주말 지원/제한적 가동/장기 Down)</h2>
 
 <form method="post">
     <input type="hidden" asp-for="Input.Id" />
@@ -42,7 +42,7 @@
             <input asp-for="Input.Manager" class="form-control" />
         </div>
 
-        <div class="col-md-4">
+        <div class="form-group">
             <label>공정</label>
             <select asp-for="Input.Process" class="form-control">
                 <option>CA</option>
@@ -53,12 +53,12 @@
             </select>
         </div>
         
-        <div class="col-md-4">
+        <div class="form-group">
             <label>장비</label>
             <input asp-for="Input.Equipment" class="form-control" />
         </div>
         
-        <div class="col-md-4">
+        <div class="form-group">
             <label>장비 번호</label>
             <input asp-for="Input.EquipmentNo" class="form-control" />
         </div>

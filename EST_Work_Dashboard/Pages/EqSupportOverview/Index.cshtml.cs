@@ -18,7 +18,8 @@ namespace EST_Work_Dashboard.Pages.EqSupportOverview
         // Razor 페이지에서 사용할 데이터 목록
         public List<EqSupportOverviewModel> OverviewList { get; set; }
 
-        public async Task OnGetAsync(string? classification, string? cp, string? manager, string? process, string? equipment, string? equipmentNo, DateTime? down, DateTime? recovery)
+        public async Task OnGetAsync(string? classification, string? cp, string? manager, string? process, 
+            string? equipment, string? equipmentNo, DateTime? down, DateTime? recovery)
         {
             var all = await _service.GetAllAsync();
 

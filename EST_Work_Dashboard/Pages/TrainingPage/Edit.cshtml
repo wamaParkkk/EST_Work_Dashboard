@@ -1,0 +1,107 @@
+﻿@page
+@model EST_Work_Dashboard.Pages.TrainingPage.EditModel
+@{
+    ViewData["Title"] = "Training 작성";
+}
+
+<h2 style="font-size: 1.5rem; margin-bottom: 30px;">작성 (Training)</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Input.Id" />
+
+    <div class="row">
+        <div class="col-md-4">
+            <label>Start Date</label>
+            <input asp-for="Input.StartDate" class="form-control" type="date" />
+        </div>
+
+        <div class="col-md-4">
+            <label>End Date</label>
+            <input asp-for="Input.EndDate" class="form-control" type="date" />
+        </div>
+
+        <div class="form-group">
+            <label>CP</label>
+            <select asp-for="Input.CP" class="form-control">
+                <option>강대훈 수석</option>
+                <option>김민규 수석</option>
+                <option>김범준 수석</option>
+                <option>김성훈 수석</option>
+                <option>김완 수석</option>
+                <option>김태경 수석</option>
+                <option>박형길 수석</option>
+                <option>배철호 수석</option>
+                <option>송성국 수석</option>
+                <option>이건구 수석</option>
+                <option>이삼섭 수석</option>
+                <option>장명진 수석</option>
+                <option>최용규 수석</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>담당자</label>
+            <input asp-for="Input.Manager" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Site</label>
+            <select asp-for="Input.Site" class="form-control">
+                <option>ATK</option>
+                <option>ATV</option>
+                <option>AWW</option>
+            </select>
+        </div>
+        
+        <div class="col-md-4">
+            <label>Plant</label>
+            <select asp-for="Input.Plant" class="form-control">
+                <option>K5</option>
+                <option>K4</option>
+                <option>K3</option>
+                <option>ATV</option>
+                <option>AWW</option>
+            </select>
+        </div>        
+
+        <div class="form-group">
+            <label>공정</label>
+            <input asp-for="Input.Process" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>장비사</label>
+            <input asp-for="Input.Eq_Manufacturer" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>모델명</label>
+            <input asp-for="Input.Model_Name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>교육 내용</label>
+            <textarea asp-for="Input.Training_Content" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>교육 진행자</label>
+            <input asp-for="Input.Trainer" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>교육 대상자</label>
+            <textarea asp-for="Input.Trainee" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Remark</label>
+            <textarea asp-for="Input.Remark" class="form-control"></textarea>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-cloud-upload"></i> 등록</button>
+            <a asp-page="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> 취소</a>
+        </div>
+    </div>
+</form>

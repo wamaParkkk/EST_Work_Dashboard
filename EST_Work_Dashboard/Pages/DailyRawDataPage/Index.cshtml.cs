@@ -19,7 +19,8 @@ namespace EST_Work_Dashboard.Pages.DailyRawDataPage
         public List<DailyRawData> RawDataList { get; set; }
 
         // 페이지가 처음 로드될 때 실행
-        public async Task OnGetAsync(string? ww, DateTime? start, DateTime? end, string? cp, string? manager, string? classification, string? line, string? process, string? model, string? mc)
+        public async Task OnGetAsync(string? ww, DateTime? start, DateTime? end, string? cp, string? manager, 
+            string? classification, string? line, string? process, string? model, string? mc)
         {
             var all = await _dataService.GetAllAsync();
 

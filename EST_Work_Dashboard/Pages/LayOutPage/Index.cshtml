@@ -1,10 +1,10 @@
 ﻿@page
-@model EST_Work_Dashboard.Pages.DailyRawDataPage.IndexModel
+@model EST_Work_Dashboard.Pages.LayOutPage.IndexModel
 @{
-    ViewData["Title"] = "Daily Raw Data";
+    ViewData["Title"] = "Lay Out";
 }
 
-<h2 style="font-size: 1.5rem; margin-bottom: 30px;">Daily Raw Data 목록</h2>
+<h2 style="font-size: 1.5rem; margin-bottom: 30px;">Lay Out 목록</h2>
 
 <div class="d-flex gap-2 mb-3">
     <a class="btn btn-primary" asp-page="Edit">
@@ -19,59 +19,59 @@
 </div>
 
 <!-- 스크롤 가능한 래퍼 div -->
-<div style="display: block;">    
+<div style="display: block;">
     <form method="get" class="mb-3">
-        <div class="row align-items-end g-2">
-            <div class="col-auto">
-                <label class="form-label">ww</label>                
-                <input type="text" name="ww" class="form-control input-xs" value="@Request.Query["ww"]" />
-            </div>
-            
+        <div class="row align-items-end g-2">            
             <div class="col-auto">
                 <label class="form-label">Start Date</label>
                 <input type="date" name="start" class="form-control input-xs" value="@Request.Query["start"]" />
             </div>
-            
+
             <div class="col-auto">
                 <label class="form-label">End Date</label>
                 <input type="date" name="end" class="form-control input-xs" value="@Request.Query["end"]" />
             </div>
-            
+
             <div class="col-auto">
                 <label class="form-label">CP</label>
-                <input type="text" name="cp" class="form-control input-xs" value="@Request.Query["cp"]" />                
+                <input type="text" name="cp" class="form-control input-xs" value="@Request.Query["cp"]" />
             </div>
-            
+
             <div class="col-auto">
                 <label class="form-label">담당자</label>
                 <input type="text" name="manager" class="form-control input-xs" value="@Request.Query["manager"]" />
             </div>
 
             <div class="col-auto">
-                <label class="form-label">분류</label>
-                <input type="text" name="classification" class="form-control input-xs" value="@Request.Query["classification"]" />
+                <label class="form-label">CR#</label>
+                <input type="text" name="cr" class="form-control input-xs" value="@Request.Query["cr"]" />
             </div>
-            
+
+            <div class="col-auto">
+                <label class="form-label">Project 명</label>
+                <input type="text" name="project" class="form-control input-xs" value="@Request.Query["project"]" />
+            </div>
+
+            <div class="col-auto">
+                <label class="form-label">공장</label>
+                <input type="text" name="plant" class="form-control input-xs" value="@Request.Query["plant"]" />
+            </div>
+
             <div class="col-auto">
                 <label class="form-label">Line</label>
                 <input type="text" name="line" class="form-control input-xs" value="@Request.Query["line"]" />
             </div>
-            
+
             <div class="col-auto">
                 <label class="form-label">공정</label>
                 <input type="text" name="process" class="form-control input-xs" value="@Request.Query["process"]" />
             </div>
-            
+
             <div class="col-auto">
                 <label class="form-label">모델명</label>
                 <input type="text" name="model" class="form-control input-xs" value="@Request.Query["model"]" />
             </div>
-            
-            <div class="col-auto">
-                <label class="form-label">장비 번호</label>
-                <input type="text" name="mc" class="form-control input-xs" value="@Request.Query["mc"]" />
-            </div>
-            
+
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary w-30"><i class="bi bi-search"></i> 검색</button>
             </div>
@@ -81,36 +81,24 @@
     <table class="table table-bordered table-striped table-hover">
         <thead class="table-dark">
             <tr>
-                <th style="min-width: 150px; text-align: center;">작업</th>
-                <th class="width-50">ww</th>
+                <th style="min-width: 150px; text-align: center;">작업</th>                
                 <th class="width-50">Start Date</th>
                 <th class="width-50">End Date</th>
                 <th class="width-80">CP</th>
                 <th class="width-80">담당자</th>
-                <th class="width-150">분류</th>
-                <th class="width-50">Site</th>
+                <th class="width-150">CR#</th>
+                <th class="width-50">Project 명</th>
                 <th class="width-80">Plant</th>
                 <th class="width-80">Line</th>
                 <th class="width-150">공정</th>
                 <th class="width-150">장비사</th>
                 <th class="width-150">모델명</th>
-                <th class="width-150">장비 번호</th>
-                <th class="width-300">알람/문제내용</th>
-                <th class="width-300">조치 사항</th>
-                <th class="width-300">문제 원인</th>
-                <th class="width-300">Status</th>
-                <th class="width-80">TTL Q'ty</th>
-                <th class="width-80">Done Q'ty</th>
-                <th class="width-300">Remark</th>
-                <th class="width-80">Q'ty</th>
-                <th class="width-120">Outsourced Cost ($K)/Set</th>
-                <th class="width-120">In-house Cost ($K)/Set</th>
-                <th class="width-120">Cost Save ($K)/Set</th>
-                <th class="width-120">TTL Cost Save ($K)</th>                
+                <th class="width-150">분류</th>                
+                <th class="width-300">Remark</th>                
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.RawDataList)
+            @foreach (var item in Model.LayOutList)
             {
                 <tr>
                     <td>
@@ -120,32 +108,20 @@
                             <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> 삭제</button>
                         </form>
                     </td>
-
-                    <td>@item.ww</td>
+                    
                     <td>@(item.StartDate?.ToString("yyyy-MM-dd") ?? "")</td>
                     <td>@(item.EndDate?.ToString("yyyy-MM-dd") ?? "")</td>
                     <td>@item.CP</td>
                     <td>@item.Manager</td>
-                    <td>@item.Classification</td>
-                    <td>@item.Site</td>
+                    <td>@item.CR</td>
+                    <td>@item.Project_Name</td>
                     <td>@item.Plant</td>
                     <td>@item.Line</td>
                     <td>@item.Process</td>
                     <td>@item.Eq_Manufacturer</td>
                     <td>@item.Model_Name</td>
-                    <td>@item.MC</td>
-                    <td>@item.Problem_Description</td>
-                    <td>@item.Actions</td>
-                    <td>@item.Cause</td>
-                    <td>@item.Status</td>
-                    <td>@item.TTL_Qty</td>
-                    <td>@item.Done_Qty</td>
-                    <td>@item.Remark</td>
-                    <td>@item.Qty</td>
-                    <td>@item.Outsourced_Cost</td>
-                    <td>@item.Inhouse_Cost</td>
-                    <td>@item.Cost_Save</td>
-                    <td>@item.TTL_Cost_Save</td>                                        
+                    <td>@item.Classification</td>                    
+                    <td>@item.Remark</td>                    
                 </tr>
             }
         </tbody>
