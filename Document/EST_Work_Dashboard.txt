@@ -1,0 +1,109 @@
+* 개발 언어: c#
+* 프로젝트 템플릿: ASP.NET Core 웹앱 (Amkor 프로젝트의 Equipment Dashboard 형태)
+* 프로젝트 이름: EST_Work_Dashboard
+* 개발 Plan 및 기능
+ - 아래 네가지 종류 웹페이지 개발. 한개의 프로그램(Web)에서 각각의 페이지를 운영 (추후 페이지 추가 가능)
+    1. Daily Raw Data
+    2. Equipment Support Overview
+    3. Lay Out
+    4. Training
+
+ - 페이지마다 Sql 서버 사용
+
+ - 웹 페이지 UI 스타일 및 기능 요청 사항
+    1. 좌측에 Windows 탐색기 폴더 처럼 각 페이지를 메뉴화해서 선택할 수 있게 구현
+    2. 메뉴를 선택하면 Sql 서버 내용이 Table형태로 표시
+    3. 팀원들은 게시판처럼 글쓰기 기능으로 구현. 저장 버튼 클릭시 Sql 서버에 저장되고 2번처럼 Table 보기로 전환되면 됨 (Sql Table의 담당자가 글쓴이가 되는 형태)
+    4. 게시판 글쓰기 이므로 수정/삭제 가능
+
+ - 웹 페이지 관리자를 지정해서 다음 내용을 추가/수정/삭제 가능해야함 (관리자 모드 or 관리 프로그램을 따로 만들어도 됨)
+    1. Sql서버의 Column내용 추가/수정/삭제 가능
+    2. 각 Table마다 존재하는 CP의 이름을 추가/수정/삭제 가능 (CP 이름이 몇명 정해져 있음)
+
+* Sql 서버 Table 구성
+(1) Daily Raw Data
+ - Table name: EST_DailyRawData
+ - Column Name
+   1) Id (Data Type: int)
+   2) ww (Data Type: nvarchar)
+   3) StartDate (Data Type: datetime)
+   4) EndDate (Data Type: datetime)
+   5) CP (Data Type: nvarchar)
+   6) Manager (Data Type: nvarchar)
+   7) Classification (Data Type: nvarchar)
+   8) Site (Data Type: nvarchar)
+   9) Plant (Data Type: nvarchar)
+   10) Line (Data Type: nvarchar)
+   11) Process (Data Type: nvarchar)
+   12) Eq_Manufacturer (Data Type: nvarchar)
+   13) Model_Name (Data Type: nvarchar)
+   14) MC (Data Type: nvarchar)
+   15) Problem_Description (Data Type: nvarchar)
+   16) Actions (Data Type: nvarchar)
+   17) Cause (Data Type: nvarchar)
+   18) Status (Data Type: nvarchar)
+   19) TTL_Qty (Data Type: nvarchar)
+   20) Done_Qty (Data Type: nvarchar)
+   21) Remark (Data Type: nvarchar)
+   22) Qty (Data Type: nvarchar)
+   23) Outsourced_Cost (Data Type: nvarchar)
+   24) Inhouse_Cost (Data Type: nvarchar)
+   25) Cost_Save (Data Type: nvarchar)
+   26) TTL_Cost_Save (Data Type: nvarchar)
+
+(2) Equipment Support Overview
+ - Table name: EST_EqSupportOverview
+ - Column Name
+   1) Id (Data Type: int)
+   2) Classification (Data Type: nvarchar)
+   3) CP (Data Type: nvarchar)
+   4) Manager (Data Type: nvarchar)
+   5) Process (Data Type: nvarchar)
+   6) Equipment (Data Type: nvarchar)
+   7) EquipmentNo (Data Type: nvarchar)
+   8) Down_Reason (Data Type: nvarchar)
+   9) Actions (Data Type: nvarchar)
+   10) Status (Data Type: nvarchar)
+   11) Down_Date (Data Type: datetime)
+   12) Recovery_Date (Data Type: datetime)
+   13) Down_Time (Data Type: nvarchar)
+   14) Technician (Data Type: nvarchar)
+
+(3) Lay Out
+ - Table name: EST_LayOut
+ - Column Name
+   1) Id (Data Type: int)
+   2) StartDate (Data Type: datetime)
+   3) EndDate (Data Type: datetime)
+   4) CP (Data Type: nvarchar)
+   5) Manager (Data Type: nvarchar)
+   6) CR (Data Type: nvarchar)
+   7) Project_Name (Data Type: nvarchar)
+   8) Plant (Data Type: nvarchar)
+   9) Line (Data Type: nvarchar)
+   10) Process (Data Type: nvarchar)
+   11) Eq_Manufacturer (Data Type: nvarchar)
+   12) Model_Name (Data Type: nvarchar)
+   13) Classification (Data Type: nvarchar)
+   14) Remark (Data Type: nvarchar)
+
+(4) Training
+ - Table name: EST_Training
+ - Column Name
+   1) Id (Data Type: int)
+   2) StartDate (Data Type: datetime)
+   3) EndDate (Data Type: datetime)
+   4) CP (Data Type: nvarchar)
+   5) Manager (Data Type: nvarchar)
+   6) Site (Data Type: nvarchar)
+   7) Plant (Data Type: nvarchar)
+   8) Process (Data Type: nvarchar)
+   9) Eq_Manufacturer (Data Type: nvarchar)
+   10) Model_Name (Data Type: nvarchar)
+   11) Training_Content (Data Type: nvarchar)
+   12) Trainer (Data Type: nvarchar)
+   13) Trainee (Data Type: nvarchar)
+   14) Remark (Data Type: nvarchar)
+   
+   
+   
