@@ -76,17 +76,17 @@
 
 @if (Model.LotSummaries?.Any() == true)
 {
-    <table class="table table-sm table-bordered table-hover">
-        <thead class="table-light">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
             <tr>
-                <th>Lot</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>Run (hh:mm)</th>
-                <th>Alarm (hh:mm)</th>
-                <th>Net (hh:mm)</th>
-                <th>Output</th>
-                <th>Alarm Cnt</th>
+                <th class="width-80">Lot#</th>
+                <th class="width-150">투입시간</th>
+                <th class="width-150">종료시간</th>
+                <th class="width-80">Run time</th>
+                <th class="width-80">Alarm time</th>
+                <th class="width-80">실가동시간</th>
+                <th class="width-80">생산량</th>
+                <th class="width-80">Alarm Cnt</th>
             </tr>
         </thead>
         <tbody>
@@ -94,8 +94,8 @@
             {
                 <tr>
                     <td>@s.LotNo</td>
-                    <td>@(s.Start?.ToString("yyyy-MM-dd HH:mm") ?? "")</td>
-                    <td>@(s.End?.ToString("yyyy-MM-dd HH:mm") ?? "")</td>
+                    <td>@(s.Start?.ToString("yyyy-MM-dd HH:mm:ss") ?? "")</td>
+                    <td>@(s.End?.ToString("yyyy-MM-dd HH:mm:ss") ?? "")</td>
                     <td>@($"{(int)s.RunDuration.TotalHours:00}:{s.RunDuration.Minutes:00}:{s.RunDuration.Seconds:00}")</td>
                     <td>@($"{(int)s.AlarmDuration.TotalHours:00}:{s.AlarmDuration.Minutes:00}:{s.AlarmDuration.Seconds:00}")</td>
                     <td>@($"{(int)s.NetRun.TotalHours:00}:{s.NetRun.Minutes:00}:{s.NetRun.Seconds:00}")</td>
