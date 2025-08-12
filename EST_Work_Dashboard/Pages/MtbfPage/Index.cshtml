@@ -1,0 +1,108 @@
+﻿@page
+@model EST_Work_Dashboard.Pages.MtbfPage.IndexModel
+@{
+    ViewData["Title"] = "MTBF Log";
+}
+
+<h2 style="font-size: 1.5rem; margin-bottom: 30px;">MTBF Log</h2>
+
+<!-- 1) 날짜/장비/라인 선택 + 다운로드 -->
+<form method="post" asp-page-handler="Fetch" class="row g-2 align-items-end mb-3">
+    <div class="col-auto">
+        <label class="form-label">날짜</label>
+        <input type="date" asp-for="SelectedDate" class="form-control form-control-sm" />
+    </div>
+    
+    <div class="col-auto">
+        <label class="form-label">장비타입</label>
+        <select asp-for="SelectedEquip" class="form-control form-control-sm">
+            <option value="">-- 선택 --</option>
+            @foreach (var e in Model.EquipTypes)
+            {
+                <option value="@e" selected="@(e==Model.SelectedEquip)">@e</option>
+            }
+        </select>
+    </div>
+    
+    <div class="col-auto">
+        <label class="form-label">라인코드</label>
+        <select asp-for="SelectedLine" class="form-control form-control-sm">
+            <option value="">-- 선택 --</option>
+            @foreach (var l in Model.LineCodes)
+            {
+                <option value="@l" selected="@(l==Model.SelectedLine)">@l</option>
+            }
+        </select>
+    </div>
+    
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary w-30"><i class="bi bi-search"></i> 검색</button>
+    </div>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-warning py-2">
+        @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@err.ErrorMessage</div>
+        }
+    </div>
+}
+
+@if (Model.Assets?.Any() == true)
+{
+    <!-- 2) 자산 선택 후 요약 보기 -->
+    <form method="post" asp-page-handler="Summarize" class="row g-2 align-items-end mb-3">
+        <input type="hidden" asp-for="SelectedDate" />
+        <input type="hidden" asp-for="SelectedEquip" />
+        <input type="hidden" asp-for="SelectedLine" />
+        <div class="col-auto">
+            <label class="form-label">자산번호</label>
+            <select asp-for="PickedAsset" class="form-control form-control-sm">
+                <option value="">-- 선택 --</option>
+                @foreach (var a in Model.Assets)
+                {
+                    <option value="@a.AssetNo">@a.AssetNo - @a.Model</option>
+                }
+            </select>
+        </div>
+        
+        <div class="col-auto">
+            <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-list-ul"></i> 요약 보기</button>
+        </div>
+    </form>
+}
+
+@if (Model.LotSummaries?.Any() == true)
+{
+    <table class="table table-sm table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Lot</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Run (hh:mm)</th>
+                <th>Alarm (hh:mm)</th>
+                <th>Net (hh:mm)</th>
+                <th>Output</th>
+                <th>Alarm Cnt</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model.LotSummaries)
+            {
+                <tr>
+                    <td>@s.LotNo</td>
+                    <td>@(s.Start?.ToString("yyyy-MM-dd HH:mm") ?? "")</td>
+                    <td>@(s.End?.ToString("yyyy-MM-dd HH:mm") ?? "")</td>
+                    <td>@($"{(int)s.RunDuration.TotalHours:00}:{s.RunDuration.Minutes:00}:{s.RunDuration.Seconds:00}")</td>
+                    <td>@($"{(int)s.AlarmDuration.TotalHours:00}:{s.AlarmDuration.Minutes:00}:{s.AlarmDuration.Seconds:00}")</td>
+                    <td>@($"{(int)s.NetRun.TotalHours:00}:{s.NetRun.Minutes:00}:{s.NetRun.Seconds:00}")</td>
+                    <td>@s.TotalOutput</td>
+                    <td>@s.AlarmCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

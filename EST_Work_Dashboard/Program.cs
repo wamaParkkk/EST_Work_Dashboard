@@ -1,5 +1,7 @@
 using EST_Work_Dashboard.Data;
 
+System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,6 +11,7 @@ builder.Services.AddSingleton<DailyRawDataService>();
 builder.Services.AddSingleton<EqSupportOverviewService>();
 builder.Services.AddSingleton<LayOutService>();
 builder.Services.AddSingleton<TrainingService>();
+builder.Services.AddSingleton<MtbfLogService>();
 
 // 고정 포트 5020으로 Listen (외부 접속 가능)
 builder.WebHost.ConfigureKestrel(options =>
