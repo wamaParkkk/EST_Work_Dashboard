@@ -58,12 +58,12 @@
         <input type="hidden" asp-for="SelectedEquip" />
         <input type="hidden" asp-for="SelectedLine" />
         <div class="col-auto">
-            <label class="form-label">자산번호</label>
+            <label class="form-label">자산번호 | 모델 | 번호</label>
             <select asp-for="PickedAsset" class="form-control form-control-sm">
                 <option value="">-- 선택 --</option>
                 @foreach (var a in Model.Assets)
-                {
-                    <option value="@a.AssetNo">@a.AssetNo - @a.Model</option>
+                {                    
+                    <option value="@a.AssetNo">@a.AssetNo | @a.Model | @a.Number</option>
                 }
             </select>
         </div>
@@ -98,7 +98,7 @@
                     <td>@(s.End?.ToString("yyyy-MM-dd HH:mm:ss") ?? "")</td>
                     <td>@($"{(int)s.RunDuration.TotalHours:00}:{s.RunDuration.Minutes:00}:{s.RunDuration.Seconds:00}")</td>
                     <td>@($"{(int)s.AlarmDuration.TotalHours:00}:{s.AlarmDuration.Minutes:00}:{s.AlarmDuration.Seconds:00}")</td>
-                    <td>@($"{(int)s.NetRun.TotalHours:00}:{s.NetRun.Minutes:00}:{s.NetRun.Seconds:00}")</td>
+                    <td>@($"{(int)s.NetRun.TotalHours:00}:{s.NetRun.Minutes:00}:{s.NetRun.Seconds:00}")</td>                    
                     <td>@s.TotalOutput</td>
                     <td>@s.AlarmCount</td>
                 </tr>

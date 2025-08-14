@@ -97,7 +97,7 @@ namespace EST_Work_Dashboard.Data
                     return new StreamReader(fs, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false), detectEncodingFromByteOrderMarks: true);
             }
 
-            // 2) 샘플로 UTF-8 vs CP949 중 더 "한글이 많은" 쪽 선택
+            // 2) UTF-8 vs CP949 중 더 "한글이 많은" 쪽 선택
             int sampleLen = 4096;
             byte[] buf = new byte[Math.Min(sampleLen, Math.Max((int)fs.Length, 1))];
             int read = fs.Read(buf, 0, buf.Length);
@@ -141,47 +141,109 @@ namespace EST_Work_Dashboard.Data
 
             return new CsvReader(sr, config);
         }
-
-        private static string? GetVal(IDictionary<string, object> d, params string[] keys)
+        
+        private static string CanonEquipMinimal(string? s)
         {
-            foreach (var k in keys)
-                if (d.ContainsKey(k) && d[k] != null) return d[k]!.ToString();
+            if (string.IsNullOrWhiteSpace(s)) 
+                return "";
 
-            return null;
-        }        
+            return s.Trim().ToUpperInvariant().Replace("_", "/");
+        }
 
         // ─────────────────────────────────────────────────────────────────────────
         // Step1: 자산 목록만 스트리밍 수집 (AssetNo - Model)
         // ─────────────────────────────────────────────────────────────────────────
-        public async Task<List<(string AssetNo, string Model)>> EnumerateAssetsAsync(string csvPath)
+        public async Task<List<(string AssetNo, string Model, string Number)>> EnumerateAssetsAsync(string csvPath, string? lineFilter = null, string? equipFilter = null)
         {
-            var set = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+            static string Normalize(string? s)
+            {
+                if (string.IsNullOrEmpty(s)) 
+                    return string.Empty;
+
+                return s.Replace("\uFEFF", "").Replace("\u00A0", " ").Trim()
+                        .Normalize(NormalizationForm.FormKC);
+            }
+
+            static string? GetVal(IDictionary<string, object> d, params string[] keys)
+            {
+                var norm = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
+                foreach (var kv in d) norm[Normalize(kv.Key)] = kv.Value;
+                
+                foreach (var k in keys)
+                {
+                    var nk = Normalize(k);
+                    if (norm.TryGetValue(nk, out var v) && v != null) 
+                        return v.ToString();
+                }
+
+                return null;
+            }
             
-            using var sr = OpenReader(csvPath);
-            using var csv = CreateCsvReader(sr);
+            // "_" ↔ "/" 통일 (대문자 비교)
+            static string CanonEquipMinimal(string? s)
+                => string.IsNullOrWhiteSpace(s) ? "" : s.Trim().ToUpperInvariant().Replace("_", "/");
+            
+            var result = new Dictionary<string, (string? Model, string? Number)>(StringComparer.OrdinalIgnoreCase);
+            
+            using var sr = OpenReader(csvPath);     // UTF-8/CP949 자동 판별
+            using var csv = CreateCsvReader(sr);    // DetectDelimiter = true
+            
+            var equipFilterCanon = CanonEquipMinimal(equipFilter);
             
             await foreach (var rec in csv.GetRecordsAsync<dynamic>())
             {
                 var d = (IDictionary<string, object>)rec;
                 
+                // 1) 라인코드 필터
+                var line = GetVal(d, "라인코드", "Line", "LineCode");
+                if (!string.IsNullOrWhiteSpace(lineFilter) &&
+                    !string.Equals(Normalize(line), Normalize(lineFilter), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                
+                // 2) 장비타입 필터 ("_" <-> "/" 동치)
+                var eqTypeRaw = GetVal(d, "장비타입", "EquipmentType", "EqType");
+                var eqTypeCanon = CanonEquipMinimal(eqTypeRaw);
+                if (!string.IsNullOrWhiteSpace(equipFilterCanon) &&
+                    !string.Equals(eqTypeCanon, equipFilterCanon, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+                
+                // 3) 자산번호/모델/번호 추출
                 var asset = GetVal(d,
                     "자산번호", "자산 번호",
                     "AssetNo", "Asset No", "Asset"                    
                 );
-
                 if (string.IsNullOrWhiteSpace(asset)) 
                     continue;
 
-                if (!set.ContainsKey(asset))
+                var model = GetVal(d, "모델", "모델명", "Model", "Model Name", "Model_Name", "EquipModel");
+                var number = GetVal(d, "번호", "No", "Number");
+                
+                if (!result.ContainsKey(asset))
                 {
-                    var model = GetVal(d, "모델", "모델명", "Model", "Model Name", "Model_Name", "EquipModel");
-                    set[asset] = model;
+                    result[asset] = (model, number);
+                }                    
+                else
+                {
+                    // 이미 있더라도, 비어있던 값은 채워줌
+                    var cur = result[asset];
+                    if (string.IsNullOrWhiteSpace(cur.Model) && !string.IsNullOrWhiteSpace(model))
+                        cur.Model = model;
+
+                    if (string.IsNullOrWhiteSpace(cur.Number) && !string.IsNullOrWhiteSpace(number))
+                        cur.Number = number;
+
+                    result[asset] = cur;
                 }
             }
-
-            return set.Select(kv => (kv.Key, kv.Value ?? ""))
-                      .OrderBy(x => x.Key)
-                      .ToList();
+            
+            return result
+                .Select(kv => (AssetNo: kv.Key, Model: kv.Value.Model ?? "", Number: kv.Value.Number ?? ""))
+                .OrderBy(x => x.AssetNo)
+                .ToList();
         }
 
         public async Task<string[]> ProbeHeadersAsync(string csvPath)
@@ -210,7 +272,7 @@ namespace EST_Work_Dashboard.Data
                     return string.Empty;
 
                 return s.Replace("\uFEFF", "").Replace("\u00A0", " ").Trim()
-                        .Normalize(System.Text.NormalizationForm.FormKC);
+                        .Normalize(NormalizationForm.FormKC);
             }
             
             static string? GetVal(IDictionary<string, object> dict, params string[] keys)

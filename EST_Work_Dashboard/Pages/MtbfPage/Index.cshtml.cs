@@ -20,8 +20,8 @@ namespace EST_Work_Dashboard.Pages.MtbfPage
         
         // 파일/데이터
         public string? DownloadedPath { get; set; }
-        public List<(string AssetNo, string Model)> Assets { get; set; } = new();
-        
+        public List<(string AssetNo, string Model, string Number)> Assets { get; set; } = new();
+
         // 자산 선택
         [BindProperty] public string? PickedAsset { get; set; }
         public List<LotSummary> LotSummaries { get; set; } = new();
@@ -45,14 +45,20 @@ namespace EST_Work_Dashboard.Pages.MtbfPage
                 }
 
                 DownloadedPath = await _service.DownloadCsvAsync(SelectedDate, SelectedEquip);
-                Assets = await _service.EnumerateAssetsAsync(DownloadedPath);
-                
+                // 라인/장비타입 필터를 함께 전달
+                Assets = await _service.EnumerateAssetsAsync(DownloadedPath, SelectedLine, SelectedEquip);
+
                 if (Assets.Count == 0)
                 {
-                    var headers = await _service.ProbeHeadersAsync(DownloadedPath);
-                    ModelState.AddModelError("", "헤더: " + string.Join(" | ", headers));
-                    ModelState.AddModelError("", "csv 파일은 받았지만 '자산번호'가 한 건도 파싱되지 않았습니다. (헤더/인코딩/구분자 확인)");                                        
+                    //var headers = await _service.ProbeHeadersAsync(DownloadedPath);
+                    //ModelState.AddModelError("", "헤더: " + string.Join(" | ", headers));                    
+                    ModelState.AddModelError("", $"자산이 없습니다. (라인:{SelectedLine}, 장비:{SelectedEquip})");
                 }
+
+                if (Assets.Count == 0)
+                {
+                    
+                }                    
             }
             catch (Exception ex)
             {
@@ -77,8 +83,8 @@ namespace EST_Work_Dashboard.Pages.MtbfPage
                 return Page();
             }
             
-            // 자산 목록은 다시 표시
-            Assets = await _service.EnumerateAssetsAsync(csvPath);
+            // Dropdown 유지: 라인/장비타입 필터로 자산 목록 재구성
+            Assets = await _service.EnumerateAssetsAsync(csvPath, SelectedLine, SelectedEquip);
             
             if (string.IsNullOrWhiteSpace(PickedAsset))
             {
@@ -86,16 +92,7 @@ namespace EST_Work_Dashboard.Pages.MtbfPage
                 return Page();
             }
             
-            try
-            {
-                LotSummaries = await _service.SummarizeByLotForAssetAsync(csvPath, PickedAsset);
-                return Page();
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", $"요약 중 오류: {ex.Message}");
-            }
-            
+            LotSummaries = await _service.SummarizeByLotForAssetAsync(csvPath, PickedAsset);
             return Page();
         }
     }

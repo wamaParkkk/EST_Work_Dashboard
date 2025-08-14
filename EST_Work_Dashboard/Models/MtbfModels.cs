@@ -37,9 +37,11 @@
         public string LotNo { get; set; } = "";
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
-        public TimeSpan RunDuration { get; set; }     // 가동 시간 합
-        public TimeSpan AlarmDuration { get; set; }   // 알람 시간 합
-        public TimeSpan NetRun => RunDuration - AlarmDuration; // 실가동(단순차)
+        public TimeSpan RunDuration { get; set; }     // 가동 시간 합계
+        public TimeSpan AlarmDuration { get; set; }   // 알람 시간 합계
+        //public TimeSpan NetRun => RunDuration - AlarmDuration; // 실가동(단순차)                                                      
+        public TimeSpan NetRun
+            => (RunDuration > AlarmDuration) ? (RunDuration - AlarmDuration) : TimeSpan.Zero;
         public int TotalOutput { get; set; }          // 생산량 합
         public int AlarmCount { get; set; }           // 알람 횟수
     }
